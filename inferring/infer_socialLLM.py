@@ -1,6 +1,6 @@
 """
-@File        :   infer.py
-@Description :   load PAC-LoRA and generate responses
+@File        :   infer_socialLLM.py
+@Description :   load socialLLM and generate responses
                 use conda env `plora`
 @Time        :   2024/12/10
 """

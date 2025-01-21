@@ -1,5 +1,5 @@
 """
-@File        :   infer_pieces_qwen.py
+@File        :   infer_prc_pcs.py
 @Description :   generate responses using qwen with PRC-PCS
                 using conda env `pieces`
 @Time        :   2024/12/17
