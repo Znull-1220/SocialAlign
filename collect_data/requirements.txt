@@ -1,0 +1,10 @@
+lxml==4.9.3
+pymongo==4.6.3
+PyMySQL==1.1.1
+Requests==2.32.0
+schedule==1.2.1
+tqdm==4.66.3
+Pillow>=8.1.1
+selenium==4.18.1
+scrapy==2.11.1
+webdriver-manager==4.0.1

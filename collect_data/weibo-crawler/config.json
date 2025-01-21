@@ -1,0 +1,34 @@
+{
+    "user_id_list": ["6568452662"], 
+    "only_crawl_original": 0,
+    "since_date": 3650,
+    "start_page": 1,
+    "write_mode": [
+        "json"
+    ],
+    "original_pic_download": 0,
+    "retweet_pic_download": 0,
+    "original_video_download": 0,
+    "retweet_video_download": 0,
+    "download_comment": 1,
+    "comment_max_download_count": 100,
+    "download_repost": 1,
+    "repost_max_download_count": 100,
+    "user_id_as_folder_name": 1,
+    "max_weibo_count": 200,
+    "max_page_count": 40,
+    "remove_html_tag": 1,
+    "cookie": "cookie",
+    "mysql_config": {
+        "host": "localhost",
+        "port": 3306,
+        "user": "root",
+        "password": "123456",
+        "charset": "utf8mb4"
+    },
+    "mongodb_URI": "mongodb://[username:password@]host[:port][/[defaultauthdb][?options]]",
+    "post_config": {
+        "api_url": "https://api.example.com",
+        "api_token": ""
+    }
+}
