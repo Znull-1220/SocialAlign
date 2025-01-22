@@ -17,7 +17,7 @@ Experimental results demonstrates that SocialAlign surpasses strong baselines, e
     python run_spider.py --url "the url you would like to crawl" --output "OUTPUT_FILE_PATH"
     ```
 
-    - `weibo-search` is used to crawl search results of Weibo. Set your cookie of Weibo and put the trending hashtags you would like to search [here](collect_data\weibo-search\weibo\settings.py), and then execute [run_spider.py](collect_data\weibo-search\run_spider.py).
+    - `weibo-search` is used to crawl search results of Weibo. Set your cookie of Weibo and put the trending hashtags you would like to search [here](./collect_data/weibo-search/weibo/settings.py), and then execute [run_spider.py](./collect_data/weibo-search/run_spider.py).
 
     - `weibo-crawler` is to crawl history post for each user. [collect_user_history_4_ai_search.py](./collect_data/weibo-crawler/collect_user_history_4_ai_search.py) and [collect_user_history_infos.py](./collect_data/weibo-crawler/collect_user_history_infos.py) are the scripts for `weibo-ai-search` and `weibo-search` respectively.
 - `construct_dataset` includes the code to construct our *SocialWeibo* dataset.
@@ -31,7 +31,7 @@ Experimental results demonstrates that SocialAlign surpasses strong baselines, e
 2. For data collection, your can collect hashtagged posts discussing social events through two channals: Weibo Search and Weibo AI Search. `weibo-crawler` can be utilized to collect user history posts for each unique user appeared in the crawled posts with hashtag.
 3. The pipeline of *SocialWeibo* dataset construction begins with organizing a raw dataset, in which we would remove low-quality user historical posts, clean text noise and then retrieve relevant posts for each user according to the given news content. For example, you may refer to [this](./construct_dataset/organize_dataset.py) to construct raw dataset when using Weibo Search as the data source.
 
-After obtaining the raw dataset, we would extract persona for each user according the given historical posts and construct *SocialWeibo* by [organize_alphca_dataset.py](construct_dataset\organize_alphca_dataset.py). Our dataset is in alphca format.
+After obtaining the raw dataset, we would extract persona for each user according the given historical posts and construct *SocialWeibo* by [organize_alphca_dataset.py](./construct_dataset/organize_alphca_dataset.py). Our dataset is in alphca format.
 
 ## Acknowledgement
 1. `weibo-search` and `weibo-crawler` in `collect data` are based on the two projects, respectively:
