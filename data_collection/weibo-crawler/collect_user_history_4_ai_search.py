@@ -6,6 +6,7 @@
 
 import pandas as pd
 import os
+import sys
 import random
 import time
 from tqdm import trange
@@ -18,10 +19,13 @@ from util.dateutil import convert_to_days_ago
 from util.notify import push_deer
 import logging
 import logging.config
-
-from dataset_organization.utils.json_util import load_json, save_json
-
 logger = logging.getLogger("weibo")
+
+# add project root to the python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+sys.path.append(project_root)
+
+from utils.json_util import load_json, save_json
 
 
 def get_user_id_list(search_results_file): 

@@ -7,6 +7,10 @@
 
 import os
 import re
+import sys
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(project_root)
 
 from utils.json_util import load_json, save_json
 from utils.hashtag_utils import remove_hashtags, convert_topics_into_hashtags

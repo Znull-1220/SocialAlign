@@ -6,6 +6,10 @@
 
 import os
 import pandas as pd
+import sys
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(project_root)
 
 from utils.json_util import load_json, save_json
 from utils.path_utils import get_all_sub_folders
@@ -16,7 +20,7 @@ from utils.retrieve_relevant_doc import retrieve_relevant_posts
 
 import logging
 # log configuration
-LOG_PATH = '\raw_dataset_organization.log'
+LOG_PATH = './raw_dataset_organization.log'
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', handlers=[
     logging.FileHandler(LOG_PATH, mode='w', encoding='utf-8'),
     logging.StreamHandler()

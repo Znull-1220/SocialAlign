@@ -1,42 +1,62 @@
 # SocialAlign
 This repo is the implementation of "SocialAlign: A Unified Framework for Micro- and Macro-Level Public Response Prediction"
 
-## Introduction
+## Overview
 SocialAlign is the first unified framework designed to predicts real-world responses
 at both micro and macro levels in social contexts.
 Our framework employs SocialLLM with an articulate Personalized Analyze-Compose LoRA (PAC-LoRA) structure, which deploys specialized expert modules for content analysis and response generation across diverse topics and user profiles, enabling the generation of personalized comments with corresponding sentiments.
 Experimental results demonstrates that SocialAlign surpasses strong baselines, enhancing public response prediction accuracy in both micro and macro levels while effectively capturing sentiment trends on social media.
+
+<figure>
+  <img src="./assets/overview.svg" alt="Overview of SocialAlign Framework">
+  <figcaption>Overview of SocialAlign Framework</figcaption>
+</figure>
+
 ## Project Structure
-- `collect_data` includes three subprojects for crawling Weibo data. 
+- `data_collection` includes three subprojects for crawling Weibo data. 
 
     Link: [Weibo-AI-Search](https://ai.s.weibo.com/)
 
     - `weibo-ai-search` is used for crawling posts from Weibo AI Search URL. As the timestamp of detailed page in Weibo AI Search remains changing, you need to specify a URL of detailed page to be crawled. Run:
     ```bash
-    cd collect_data/weibo-ai-search
+    cd data_collection/weibo-ai-search
     python run_spider.py --url "the url you would like to crawl" --output "OUTPUT_FILE_PATH"
     ```
 
-    - `weibo-search` is used to crawl search results of Weibo. Set your cookie of Weibo and put the trending hashtags you would like to search [here](./collect_data/weibo-search/weibo/settings.py), and then execute [run_spider.py](./collect_data/weibo-search/run_spider.py).
+    - `weibo-search` is used to crawl search results of Weibo. Set your cookie of Weibo and put the trending hashtags you would like to search [here](./data_collection/weibo-search/weibo/settings.py), and then execute [run_spider.py](./data_collection/weibo-search/run_spider.py).
 
-    - `weibo-crawler` is to crawl history post for each user. [collect_user_history_4_ai_search.py](./collect_data/weibo-crawler/collect_user_history_4_ai_search.py) and [collect_user_history_infos.py](./collect_data/weibo-crawler/collect_user_history_infos.py) are the scripts for `weibo-ai-search` and `weibo-search` respectively.
-- `construct_dataset` includes the code to construct our *SocialWeibo* dataset.
+    - `weibo-crawler` is to crawl history post for each user. [collect_user_history_4_ai_search.py](./data_collection/weibo-crawler/collect_user_history_4_ai_search.py) and [collect_user_history_infos.py](./data_collection/weibo-crawler/collect_user_history_infos.py) are the scripts for `weibo-ai-search` and `weibo-search` respectively.
+- `dataset_construction` includes the code to construct our *SocialWeibo* dataset.
 - `modeling_pac_lora` is the implementation of *PAC-LoRA*, along with the modified Qwen2 model in order to adapt it to our architecture and task. [pac_lora_layer.py](./modeling_pac_lora/pac_lora_layer.py) is based on `peft 0.12` and another two scripts are based on `transformers 4.46`.
 - `fine-tuning` includes the scripts for fine-tuning our *SocialLLM* and some baseline models.
-- `inferring` includes code to infer baselines and our *SocialLLM*.
+- `inference` includes code to infer baselines and our *SocialLLM*.
+- `utils` - some util functions used in our project.
   
 **We would release all codes after notification.**
 ## Getting Started
-1. clone our repo and execute `pip install -r requirements.txt` to install the requirements needed.
-2. For data collection, your can collect hashtagged posts discussing social events through two channals: Weibo Search and Weibo AI Search. `weibo-crawler` can be utilized to collect user history posts for each unique user appeared in the crawled posts with hashtag.
-3. The pipeline of *SocialWeibo* dataset construction begins with organizing a raw dataset, in which we would remove low-quality user historical posts, clean text noise and then retrieve relevant posts for each user according to the given news content. For example, you may refer to [this](./construct_dataset/organize_dataset.py) to construct raw dataset when using Weibo Search as the data source.
+### Installation
+clone our repo and execute `pip install -r requirements.txt` to install the requirements needed.
+### Data Collection
+Your can collect hashtagged posts discussing social events through two channals: Weibo Search and Weibo AI Search. `weibo-crawler` can be utilized to collect user history posts for each unique user appeared in the crawled posts with hashtag.
+### Dataset Construction
+The pipeline of *SocialWeibo* dataset construction begins with organizing a raw dataset, in which we would remove low-quality user historical posts, clean text noise and then retrieve relevant posts for each user according to the given news content. For example, you may refer to [this](./dataset_construction/organize_dataset.py) to construct raw dataset when using Weibo Search as the data source.
 
-After obtaining the raw dataset, we would extract persona for each user according the given historical posts and construct *SocialWeibo* by [organize_alphca_dataset.py](./construct_dataset/organize_alphca_dataset.py). Our dataset is in alphca format.
+After obtaining the raw dataset, we would extract user persona for each user according to the given user historical posts [here](./). Please set your OpenAI API Key before extracting user personas:
+
+```export OPENAI_API_KEY="your_openai_api_key"```
+
+and then construct *SocialWeibo* through [organize_alphca_dataset.py](./dataset_construction/organize_alphca_dataset.py). Our dataset is in alphca format.
+### Fine-tuning
+Since Transformers and Peft libraries are complicated, we only provide the key files of *PAC-LoRA*, which are in the folder `modeling_pac_lora` for more convenient reference.
+
+We would provide our *PAC_Peft* and *PAC_Transformers* latter for automated lib installation.
+### Inference
+After getting PAC-LoRA weights, you may infer on test set through [infer_socialLLM.py](./inference/infer_socialLLM.py).
+
+You do not need to merge weights since the computation of multi-analyzing and writing is dynamic.
 
 ## Acknowledgement
-1. `weibo-search` and `weibo-crawler` in `collect data` are based on the two projects, respectively:
+1. `weibo-search` and `weibo-crawler` in `data_collection` are based on the two projects, respectively:
    - [weibo-search](https://github.com/dataabc/weibo-search)
    - [weibo-crawler](https://github.com/dataabc/weibo-crawler)
 2. The implementation of our PAC-LoRA structure is based on Huggingface [Transformers](https://github.com/huggingface/transformers) and [PEFT](https://github.com/huggingface/peft) libraries.
-
-We would like to extend our appreciation to these great open-source projects.

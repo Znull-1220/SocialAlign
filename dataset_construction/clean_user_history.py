@@ -4,8 +4,12 @@
 @Time        :   2024/10/30
 """
 
-import re
 import os
+import sys
+
+# add project root to the python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(project_root)
 
 from utils.json_util import load_json, save_json
 from utils.clean_text import clean_text, clean_topics

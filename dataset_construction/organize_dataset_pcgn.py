@@ -1,5 +1,15 @@
+"""
+@File        :   organize_dataset_pcgn.py
+@Description :   Orangize the dataset for PCGN model
+@Time        :   2025/11/2
+"""
+
 import os
-import re
+import sys
+
+# add project root to the python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(project_root)
 
 from utils.json_util import load_json, save_json
 from utils.hashtag_utils import remove_hashtags, convert_topics_into_hashtags
@@ -73,6 +83,6 @@ if __name__ == '__main__':
     # print(f"Total cases: {len(dataset)}")
 
     # TOPICS (Test)
-    DATASET_FOLDER = r"dataset_folder"
-    OUTPUT_FOLDER = r"output_folder"
+    DATASET_FOLDER = "dataset_folder"
+    OUTPUT_FOLDER = "output_folder"
     organize_dataset_4_topics(DATASET_FOLDER, OUTPUT_FOLDER)

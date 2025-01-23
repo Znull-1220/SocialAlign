@@ -1,25 +1,28 @@
 """
-@File        :   infer_prc_pcs.py
-@Description :   generate responses using qwen with PRC-PCS
-                using conda env `pieces`
-@Time        :   2024/12/17
+@File        :   infer_socialLLM.py
+@Description :   load socialLLM and generate responses
+                use conda env `plora`
+@Time        :   2024/12/10
 """
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 import torch
-import sys
 import os
+import sys
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# add project root to the python path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(project_root)
+
 from utils.json_util import load_json, save_json
-from utils.format_input import remove_user_profile
+from utils.format_input import remove_user_profile, remove_user_history
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 # PATH
 MODEL_ID = "Qwen2.5-7B-Instruct/"
-PEFT_MODULE = "Pieces_Qwen2.5-7B"
+PEFT_MODULE = "PAC_LoRA_Qwen2.5-7B"
 
 def load_base_model(model_id):
     base_model = AutoModelForCausalLM.from_pretrained(
@@ -30,17 +33,20 @@ def load_base_model(model_id):
     return base_model, tokenizer
 
 def load_peft_module(base_model, peft_module):
-    pieces_lora = PeftModel.from_pretrained(
+    pac_lora = PeftModel.from_pretrained(
         base_model, 
         peft_module, 
         is_trainable=False,
         init_lora_weights=False,
         weights_only=True
     )
-    return pieces_lora
+    return pac_lora
 
 def preprocess_function(examples, tokenizer):
     instruction = examples["instruction"]
+    # remove user profile/history for ablation study
+    # instruction = remove_user_profile(instruction)
+    # instruction = remove_user_history(instruction)
 
     messages = [
         {"role": "system", "content": "你是一个微博用户。"},
@@ -60,40 +66,68 @@ def preprocess_function(examples, tokenizer):
         prompt,
         max_length=2048,
         #padding="max_length",
-        truncation=True,
+        truncation=False,
     )
     # print(model_inputs["input_ids"])
     input_ids = model_inputs["input_ids"]
     attention_mask = model_inputs["attention_mask"]
+   
+    pre_news_text = "现在你看到了一则新闻"
+    end_news_text = "，请发一条关于hashtag"
+
+    news_start_idx = prompt.find(pre_news_text)
+    if news_start_idx == -1:
+        raise ValueError("News not found in the prompt.")
+    user_info_tokens = tokenizer(
+        prompt[:news_start_idx],
+        add_special_tokens=False
+    )["input_ids"]
+    news_token_start_idx = len(user_info_tokens)
+
+    news_end_idx = prompt.find(end_news_text)
+    if news_end_idx == -1:
+        raise ValueError("News end not found in the prompt.")
+    news_end_tokens = tokenizer(
+        prompt[:news_end_idx],
+        add_special_tokens=False
+    )["input_ids"]
+    # print(tokenizer.decode(news_end_tokens))
+    news_token_end_idx = len(news_end_tokens)
 
     return {
         "input_ids": input_ids,
         "attention_mask": attention_mask,
+        "user_mask": news_token_start_idx,
+        "news_mask": news_token_end_idx,
     }
 
 def infer(json_file_path):
     # load base model
     base_model, tokenizer = load_base_model(MODEL_ID)
     # load peft module
-    pieces_lora = load_peft_module(base_model, PEFT_MODULE)
-    pieces_lora.eval()
+    pac_lora = load_peft_module(base_model, PEFT_MODULE)
+    pac_lora.eval()
 
-    pieces_lora.to(torch.bfloat16)
+    pac_lora.to(torch.bfloat16)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    pieces_lora.to(device)
+    pac_lora.to(device)
 
     # preprocess
     data = load_json(json_file_path)
     for item in data:
         inputs = preprocess_function(item, tokenizer)
-        input_ids = torch.tensor([inputs["input_ids"]]).to(pieces_lora.device)
-        attention_mask = torch.tensor([inputs["attention_mask"]]).to(pieces_lora.device)
+        input_ids = torch.tensor([inputs["input_ids"]]).to(pac_lora.device)
+        attention_mask = torch.tensor([inputs["attention_mask"]]).to(pac_lora.device)
+        user_mask = torch.tensor([inputs["user_mask"]]).to(pac_lora.device)
+        news_mask =  torch.tensor([inputs["news_mask"]]).to(pac_lora.device)
 
         # generate responses
         with torch.no_grad():
-            outputs = pieces_lora.generate(
+            outputs = pac_lora.generate(
                 input_ids=input_ids,
                 attention_mask=attention_mask,
+                news_mask = news_mask,
+                user_mask = user_mask,
                 max_new_tokens=256,
                 do_sample=True,
                 temperature=0.7,
@@ -108,13 +142,16 @@ def infer(json_file_path):
         generated_text = tokenizer.decode(outputs[0][input_ids.shape[-1]:], skip_special_tokens=True).strip()
 
         print("Output:", generated_text)
-        item["PRC_PCS"] = generated_text
+        item["SocialLLM"] = generated_text
+
+        ################## This is for explainable study ##################
+        # item["user_mask"] = user_mask.item()
+        # item["news_mask"] = news_mask.item()
 
     save_json(data, json_file_path)
 
 if __name__ == "__main__":
-    TOPIC_FOLDER = "./dataset/topics"
+    TOPIC_FOLDER = "/topics"
     for file in os.listdir(TOPIC_FOLDER):
         if file.endswith(".json"):
-            JSON_FILE = os.path.join(TOPIC_FOLDER, file)
-            infer(JSON_FILE)
+            infer(os.path.join(TOPIC_FOLDER, file))

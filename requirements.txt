@@ -1,4 +1,5 @@
 jieba
+openai
 torch>=1.13.1
 transformers>=4.41.2,<=4.46.1
 datasets>=2.16.0,<=3.1.0
