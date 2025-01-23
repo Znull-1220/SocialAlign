@@ -8,7 +8,7 @@ Our framework employs SocialLLM with an articulate Personalized Analyze-Compose 
 Experimental results demonstrates that SocialAlign surpasses strong baselines, enhancing public response prediction accuracy in both micro and macro levels while effectively capturing sentiment trends on social media.
 
 <figure>
-    <img src="./assets/overview.jpg" alt="Overview of SocialAlign Framework">
+    <img src="./assets/overview.svg" alt="Overview of SocialAlign Framework">
     <figcaption style="text-align: center;">Overview of SocialAlign Framework</figcaption>
 </figure>
 
