@@ -7,10 +7,7 @@ at both micro and macro levels in social contexts.
 Our framework employs SocialLLM with an articulate Personalized Analyze-Compose LoRA (PAC-LoRA) structure, which deploys specialized expert modules for content analysis and response generation across diverse topics and user profiles, enabling the generation of personalized comments with corresponding sentiments.
 Experimental results demonstrates that SocialAlign surpasses strong baselines, enhancing public response prediction accuracy in both micro and macro levels while effectively capturing sentiment trends on social media.
 
-<figure>
-    <img src="./assets/overview.svg" alt="Overview of SocialAlign Framework">
-    <figcaption style="text-align: center;">Overview of SocialAlign Framework</figcaption>
-</figure>
+![](./assets/overview.png)
 
 ## Project Structure
 - `data_collection` includes three subprojects for crawling Weibo data. 
