@@ -1,5 +1,6 @@
 # SocialAlign
-This repo is the implementation of "SocialAlign: A Unified Framework for Micro- and Macro-Level Public Response Prediction"
+
+This repo is the implementation of "From Individuals to Crowds: Dual-Level Public Response Prediction in Social Media"
 
 ## Overview
 *SocialAlign* is the first unified framework designed to predicts real-world responses
