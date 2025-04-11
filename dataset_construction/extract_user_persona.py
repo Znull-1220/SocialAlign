@@ -2,7 +2,6 @@
 @File        :   extract_user_prosona.py
 @Description :   extract user persona from user's history posts for each user in the dataset
 @Author      :   Anonymous Author
-@Time        :   2024/11/09
 """
 import os
 import sys

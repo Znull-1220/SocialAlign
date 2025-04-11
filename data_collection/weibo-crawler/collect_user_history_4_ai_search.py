@@ -1,7 +1,6 @@
 """
 @File        :   collect_user_history_4_ai_search.py
 @Description :   Collect user history infomation for each user for AI search samples(微博智搜)
-@Time        :   2024/11/15
 """
 
 import pandas as pd

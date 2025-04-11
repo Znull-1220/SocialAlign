@@ -2,7 +2,6 @@
 @File        :   llm_api.py
 @Description :   OpenAI API
 @Author      :   Anonymous Author
-@Time        :   2024/11/09
 """
 
 import os

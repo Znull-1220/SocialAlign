@@ -1,7 +1,6 @@
 """
 @File        :   retrieve_relevant_doc.py
 @Description :   retieve relevant posts for each user according to the traget news post
-@Time        :   2024/12/03
 """
 
 import os

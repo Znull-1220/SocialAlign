@@ -1,7 +1,6 @@
 """
 @File        :   clean_user_history.py
 @Description :   clean user history infomation for each user.
-@Time        :   2024/10/30
 """
 
 import os

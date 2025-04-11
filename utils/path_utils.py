@@ -1,7 +1,6 @@
 """
 @File        :   path_utils.py
 @Description :   utility functions for getting file path.
-@Time        :   2024/10/30
 """
 
 import os

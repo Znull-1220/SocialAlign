@@ -1,7 +1,6 @@
 """
 @File        :   organize_dataset.py
 @Description :   organize the raw dataset
-@Time        :   2024/10/30
 """
 
 import os

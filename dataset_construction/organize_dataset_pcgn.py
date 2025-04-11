@@ -1,7 +1,6 @@
 """
 @File        :   organize_dataset_pcgn.py
 @Description :   Orangize the dataset for PCGN model
-@Time        :   2025/11/2
 """
 
 import os

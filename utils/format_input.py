@@ -1,7 +1,6 @@
 """
 @File        :   format_input.py
 @Description :   format the input for the model, change different parts of the input
-@Time        :   2024/12/23
 """
 
 import re

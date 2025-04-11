@@ -1,7 +1,6 @@
 """
 @File        :   json_util.py
 @Description :   load and save json data
-@Time        :   2024/10/30
 """
 
 import json

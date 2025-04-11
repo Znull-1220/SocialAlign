@@ -1,7 +1,6 @@
 """
 @File        :   clean_text.py
 @Description :   util functions for cleaning text data.
-@Time        :   2024/11/01
 """
 
 import re

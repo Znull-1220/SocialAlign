@@ -1,7 +1,6 @@
 """
 @File        :   hashtag_utils.py
 @Description :   utility functions for processing hashtags
-@Time        :   2024/11/02
 """
 
 import re

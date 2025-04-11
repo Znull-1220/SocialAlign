@@ -2,7 +2,6 @@
 @File        :   organize_alphca_dataset.py
 @Description :   Organize the AlphCA dataset based on the original dataset
     (user info, user weibo and user history & persona) and the news data.
-@Time        :   2024/11/02
 """
 
 import os

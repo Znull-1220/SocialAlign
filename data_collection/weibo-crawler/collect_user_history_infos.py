@@ -1,7 +1,6 @@
 """
 @File        :   collect_user_history_infos.py
 @Description :   crawl user history posts
-@Time        :   2024/10/24
 """
 
 import pandas as pd

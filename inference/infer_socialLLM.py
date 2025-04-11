@@ -2,7 +2,6 @@
 @File        :   infer_socialLLM.py
 @Description :   load socialLLM and generate responses
                 use conda env `plora`
-@Time        :   2024/12/10
 """
 
 from transformers import AutoModelForCausalLM, AutoTokenizer

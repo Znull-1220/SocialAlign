@@ -2,7 +2,6 @@
 @File        :   fine_tune_pac_lora.py
 @Description :   Fine-tune the pre-trained model using PAC-LoRA 
                 use conda env `plora`
-@Time        :   2024/12/05
 """
 
 import os

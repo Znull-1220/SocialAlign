@@ -2,7 +2,6 @@
 @File        :   fine_tune_pieces_lora.py
 @Description :   fine-tune the pre-trained model using personal pieces LoRA
                 use conda env `pieces`
-@Time        :   2024/12/13
 """
 
 import os

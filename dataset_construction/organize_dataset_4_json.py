@@ -1,7 +1,6 @@
 """
 @File        :   organize_dataset_4_json.py
 @Description :   Organize raw dataset for json format (crawled ai search samples)
-@Time        :   2024/12/14
 """
 
 import os

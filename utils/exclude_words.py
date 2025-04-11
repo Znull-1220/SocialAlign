@@ -2,7 +2,6 @@
 @File        :   exclude_words.py
 @Description :   some key words that should be excluded from the dataset,
                     including topics, texts and retweet topics and texts
-@Time        :   2024/11/08
 """
 
 exclude_topics = ['肖战', '微博', '超话', '王一博', '剧', '黑马剧', '运河有戏', '我在', '好帅',
