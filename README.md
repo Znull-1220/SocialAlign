@@ -1,6 +1,6 @@
 # SocialAlign
 
-This repo is the implementation of "From Individuals to Crowds: Dual-Level Public Response Prediction in Social Media"
+This repo is the implementation of paper [*From Individuals to Crowds: Dual-Level Public Response Prediction in Social Media*](https://arxiv.org/pdf/2508.00497).
 
 ## Overview
 *SocialAlign* is the first unified framework designed to predicts real-world responses
@@ -42,13 +42,33 @@ After obtaining the raw dataset, we would extract user persona for each user acc
 
 and then construct *SocialWeibo* through [organize_alphca_dataset.py](./dataset_construction/organize_alphca_dataset.py). Our dataset is in alphca format.
 ### Fine-tuning
-Since Transformers and Peft libraries are complicated, we only provide the key files of *PAC-LoRA*, which are in the folder `modeling_pac_lora` for more convenient reference.
-
+Since Transformers and Peft libraries are complicated, we provide the key files of *PAC-LoRA*, which are in the folder `modeling_pac_lora` for more convenient reference,
+You can replace these corresponding files in Transformers and Peft libraries. 
 We would provide our **pac-peft** and **pac-transformers** libraries later for automated library installation.
 ### Inference
 After obtaining the PAC-LoRA weights, you can perform inference on the test set using [infer_socialLLM.py](./inference/infer_socialLLM.py).
 
 Moreover, you do not need to merge weights, as the assembly of multi-analyzing and writing  experts is dynamic.
+
+## Citation
+If you find our work is useful for your research or applications, please kindly cite us:
+```
+@inproceedings{10.1145/3746027.3754828,
+author = {Zhang, Jinghui and Wan, Kaiyang and Xu, Longwei and Li, Ao and Liu, Zongfang and Chen, Xiuying},
+title = {From Individuals to Crowds: Dual-Level Public Response Prediction in Social Media},
+year = {2025},
+isbn = {9798400720352},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3746027.3754828},
+doi = {10.1145/3746027.3754828},
+booktitle = {Proceedings of the 33rd ACM International Conference on Multimedia},
+pages = {5903–5912},
+numpages = {10},
+location = {Dublin, Ireland},
+series = {MM '25}
+}
+```
 
 ## Acknowledgement
 1. `weibo-search` and `weibo-crawler` in `data_collection` are based on the two projects, respectively:
