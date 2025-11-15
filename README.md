@@ -42,9 +42,11 @@ After obtaining the raw dataset, we would extract user persona for each user acc
 
 and then construct *SocialWeibo* through [organize_alphca_dataset.py](./dataset_construction/organize_alphca_dataset.py). Our dataset is in alphca format.
 ### Fine-tuning
-Since Transformers and Peft libraries are complicated, we provide the key files of *PAC-LoRA*, which are in the folder `modeling_pac_lora` for more convenient reference,
-You can replace these corresponding files in Transformers and Peft libraries. 
-We would provide our **pac-peft** and **pac-transformers** libraries later for automated library installation.
+Please install our **pac-peft** and **pac-transformers** libraries in the environment by changing into the two folders and run `pip install -e .` respectively.
+
+
+Then, run the script `fine_tuning/fine_tune_pac_lora.py` to fine-tuning.
+
 ### Inference
 After obtaining the PAC-LoRA weights, you can perform inference on the test set using [infer_socialLLM.py](./inference/infer_socialLLM.py).
 
