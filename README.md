@@ -22,6 +22,8 @@ Experimental results demonstrates that SocialAlign surpasses strong baselines, e
 
     - `weibo-crawler` is to crawl history post for each user. [collect_user_history_4_ai_search.py](./data_collection/weibo-crawler/collect_user_history_4_ai_search.py) and [collect_user_history_infos.py](./data_collection/weibo-crawler/collect_user_history_infos.py) are the scripts for `weibo-ai-search` and `weibo-search` respectively.
 - `dataset_construction` contains the code for constructing our *SocialWeibo* dataset.
+    
+    We provide some demo cases [here](data/SocialWeibo_samples.json).
 - `modeling_pac_lora` is the implementation of *PAC-LoRA*, along with the modified Qwen2 model in order to adapt it to our *PAC-LoRA* architecture and task. [pac_lora_layer.py](./modeling_pac_lora/pac_lora_layer.py) is based on `peft 0.12` and another two scripts are based on `transformers 4.46`.
 - `fine-tuning` includes the scripts for fine-tuning our *SocialLLM* and some baseline models.
 - `inference` includes code to infer baselines and our *SocialLLM*.
